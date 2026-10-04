@@ -151,7 +151,8 @@ export function ReaderEnding({ story, liked, onLike, bookmarked, onBookmark, onS
       </View>
 
       {/* Continua con — card della storia consigliata: copertina a sinistra,
-          le tre icone del badge (senza testo), titolo e freccia a destra. */}
+          le tre icone del badge (senza testo), titolo e freccia a destra.
+          Interamente cliccabile per proseguire (nessun pulsante separato). */}
       {next ? (
         <View style={styles.nextWrap} testID="next-discovery">
           <Text style={styles.continueLabel} testID="next-discovery-title">{t.continue_with}</Text>
@@ -173,22 +174,6 @@ export function ReaderEnding({ story, liked, onLike, bookmarked, onBookmark, onS
           </Pressable>
         </View>
       ) : null}
-
-      {/* Scopri — pulsante a pillola con bordo luminoso nel colore del tema. */}
-      <Pressable
-        onPress={onNext}
-        testID="ending-read-btn"
-        accessibilityRole="button"
-        accessibilityLabel={t.discover_cta}
-        style={({ pressed }) => [
-          styles.discoverBtn,
-          { borderColor: withAlpha(colors.brand, 0.75), backgroundColor: withAlpha(colors.surfaceDeep, 0.5), boxShadow: `0px 8px 26px ${withAlpha(colors.brand, 0.28)}` as any },
-          pressed && styles.pressed,
-        ]}
-      >
-        <Text style={styles.discoverText}>{t.discover_cta}</Text>
-        <Ionicons name="arrow-forward" size={18} color={colors.textWarm} />
-      </Pressable>
     </Animated.View>
   );
 }
@@ -231,7 +216,7 @@ const useStyles = makeStyles((colors) => ({
     backgroundColor: withAlpha(colors.surfaceDeep, 0.5),
     boxShadow: `0px 10px 28px ${colors.glassShadow}` as any,
   },
-  nextThumb: { width: 76, height: 76, borderRadius: radius.md, overflow: "hidden", backgroundColor: colors.surfaceTertiary },
+  nextThumb: { width: 108, height: 108, borderRadius: radius.md, overflow: "hidden", backgroundColor: colors.surfaceTertiary },
   nextBody: { flex: 1, minWidth: 0, gap: 7, justifyContent: "center" },
   nextTitle: { color: colors.textWarm, fontFamily: typography.displayBold, fontSize: 18, lineHeight: 22 },
   nextArrow: { marginHorizontal: 4 },
