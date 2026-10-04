@@ -32,17 +32,17 @@ export function ReaderEndingBackdrop({ scrollY, pageH, endTop }: {
       {/* Veli scuri verticali (tonalità del tema): testo sempre leggibile in alto,
           orizzonte appena schiarito al centro, acqua più profonda in basso. */}
       <LinearGradient
-        colors={[withAlpha(base, 0.82), withAlpha(base, 0.5), withAlpha(base, 0.26), withAlpha(base, 0.34), withAlpha(base, 0.62), withAlpha(base, 0.8)]}
+        colors={[withAlpha(base, 0.56), withAlpha(base, 0.28), withAlpha(base, 0.1), withAlpha(base, 0.14), withAlpha(base, 0.36), withAlpha(base, 0.54)]}
         locations={[0, 0.18, 0.4, 0.58, 0.8, 1]}
         style={StyleSheet.absoluteFill}
       />
       {/* Tinta del tema: lo sfondo non resta blu fisso ma segue l'accento scelto. */}
       <LinearGradient
-        colors={[withAlpha(colors.atmosTint, 0.12), withAlpha(colors.atmosGlow, 0.14), withAlpha(colors.atmosTint, 0.1)]}
+        colors={[withAlpha(colors.atmosTint, 0.06), withAlpha(colors.atmosGlow, 0.08), withAlpha(colors.atmosTint, 0.05)]}
         locations={[0, 0.52, 1]}
         style={StyleSheet.absoluteFill}
       />
-      <View style={[StyleSheet.absoluteFill, { backgroundColor: withAlpha(base, 0.1) }]} />
+      <View style={[StyleSheet.absoluteFill, { backgroundColor: withAlpha(base, 0.04) }]} />
     </Animated.View>
   );
 }

@@ -121,7 +121,7 @@ export function ReaderEnding({ story, liked, onLike, bookmarked, onBookmark, onS
         style={[styles.rememberCard, { borderColor: withAlpha(colors.brand, 0.34), boxShadow: `inset 0px 0px 30px ${withAlpha(colors.brand, 0.08)}, 0px 12px 34px ${colors.glassShadow}` as any }]}
         testID="remember-card"
       >
-        <LinearGradient pointerEvents="none" colors={[withAlpha(colors.brand, 0.12), withAlpha(colors.surfaceDeep, 0.5)]} style={StyleSheet.absoluteFill} />
+        <LinearGradient pointerEvents="none" colors={[withAlpha(colors.brand, 0.05), withAlpha(colors.surfaceDeep, 0.14)]} style={StyleSheet.absoluteFill} />
         <MaterialDesignIcons name="brain" size={30} color={colors.brand} style={styles.rememberIcon} />
         <Text style={[styles.rememberEyebrow, { color: colors.brand }]}>{t.remember}</Text>
         <LinearGradient
@@ -204,7 +204,7 @@ const useStyles = makeStyles((colors) => ({
     borderRadius: radius.lg, borderWidth: 1, overflow: "hidden",
     alignItems: "center", alignSelf: "stretch",
     paddingVertical: spacing.lg, paddingHorizontal: spacing.lg, gap: spacing.sm,
-    backgroundColor: withAlpha(colors.surfaceDeep, 0.46),
+    backgroundColor: withAlpha(colors.surfaceDeep, 0.18),
   },
   rememberIcon: { marginBottom: 2 },
   rememberEyebrow: { fontFamily: typography.bodyBold, fontSize: 12.5, letterSpacing: 2.6, textTransform: "uppercase" },
