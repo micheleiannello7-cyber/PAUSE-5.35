@@ -71,3 +71,19 @@ def upload_cover(story_id: str, raw: bytes) -> dict:
         "hero_source_digest": digest,
         "hero_bytes": {"hero": len(hero), "thumb": len(thumb), "source": len(raw)},
     }
+
+
+def upload_avatar(user_id: str, raw: bytes) -> dict:
+    """Foto profilo: raddrizza (EXIF), ritaglia al quadrato centrale, 320px,
+    WebP. Path versionato dal digest → URL immutabile e cache-friendly."""
+    img = ImageOps.exif_transpose(Image.open(io.BytesIO(raw))).convert("RGB")
+    side = min(img.size)
+    left, top = (img.width - side) // 2, (img.height - side) // 2
+    img = img.crop((left, top, left + side, top + side)).resize((320, 320), Image.LANCZOS)
+    buf = io.BytesIO()
+    img.save(buf, "WEBP", quality=86, method=6)
+    data = buf.getvalue()
+    digest = hashlib.sha256(data).hexdigest()[:12]
+    path = f"{APP_NAME}/avatar/{user_id}/{digest}.webp"
+    put_object(path, data, "image/webp")
+    return {"avatar_path": path, "avatar_version": digest}

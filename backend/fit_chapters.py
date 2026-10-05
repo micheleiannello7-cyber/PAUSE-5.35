@@ -54,7 +54,7 @@ SYSTEM = (
 
 PROMPT = """Below is a {lang_name} {kind} from PAUSE, with all its chapters for context.
 Rewrite ONLY the chapters listed in "rewrite" so that each body is at most {budget} characters
-(hard limit {hard} — count carefully). Keep it {lang_name}.
+including spaces — roughly {words} words (hard limit {hard}: models tend to overshoot, so aim clearly below). Keep it {lang_name}.
 
 Rules:
 - Cut repetition, filler, long asides and redundant examples. Keep every fact, number, name and the
@@ -110,10 +110,10 @@ async def condense(sid: str, lang: str, doc: dict, indices: list[int]) -> dict[i
     pending = set(indices)
     done: dict[int, str] = {}
     last = "no attempt"
-    for attempt in range(4):
+    for attempt in range(5):
         prompt = PROMPT.format(
             lang_name=LANG_NAME[lang], kind="mini-lesson" if doc.get("kind") == "lesson" else "curiosity",
-            budget=budget, hard=MAX_CHARS, title=title_of(doc, lang), payload=payload, rewrite=sorted(pending),
+            budget=budget, words=budget // 7, hard=MAX_CHARS, title=title_of(doc, lang), payload=payload, rewrite=sorted(pending),
         )
         chat = LlmChat(api_key=os.environ["EMERGENT_LLM_KEY"], session_id=f"fit-{sid}-{lang}-{attempt}", system_message=SYSTEM)
         chat.with_model(*MODEL)
@@ -136,7 +136,7 @@ async def condense(sid: str, lang: str, doc: dict, indices: list[int]) -> dict[i
         if not pending:
             return done
         last = "; ".join(errors) or f"missing {sorted(pending)}"
-        budget -= 40
+        budget -= 50
     raise RuntimeError(f"{sid}/{lang}: {last}")
 
 

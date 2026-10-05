@@ -10,14 +10,18 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.emergent.pausecontrol.xpr4nz",
-      "usesAppleSignIn": true
+      "usesAppleSignIn": true,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Scegli una foto dalla galleria come immagine profilo"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#000000"
       },
-      "package": "com.emergent.pausecontrol.xpr4nz"
+      "package": "com.emergent.pausecontrol.xpr4nz",
+      "permissions": ["android.permission.READ_MEDIA_IMAGES"]
     },
     "web": {
       "bundler": "metro",
@@ -47,7 +51,13 @@
       "expo-audio",
       "expo-localization",
       "expo-sharing",
-      "expo-video"
+      "expo-video",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Scegli una foto dalla galleria come immagine profilo"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

@@ -20,7 +20,8 @@ const ACCENT_PREVIEW_W = 44, ACCENT_PREVIEW_H = 66;
 import { useUserId } from "@/src/session";
 import { usePremium, PLANS } from "@/src/premium";
 import { savePrefs } from "@/src/prefs-sync";
-import { PauseMark } from "@/src/components/pause-logo";
+import { UserAvatar } from "@/src/components/user-avatar";
+import { useAvatarPicker } from "@/src/hooks/use-avatar-picker";
 import { StreakCard } from "@/src/components/streak-card";
 import { GlassSurface, AmbientGlow } from "@/src/components/glass";
 import { useI18n, Lang } from "@/src/i18n";
@@ -47,6 +48,7 @@ export default function Profile() {
     enabled: !!userId,
   });
   const { data: categories } = useQuery({ queryKey: ["categories"], queryFn: api.categories });
+  const avatar = useAvatarPicker(userId);
 
   const resetOnboarding = async () => {
     await AsyncStorage.removeItem("pause.onboarded.v2");
@@ -60,7 +62,7 @@ export default function Profile() {
     qc.clear();
     router.replace("/onboarding");
   };
-  const accountName = auth.user?.name || auth.user?.email || t.anon;
+  const accountName = auth.user?.name || user?.display_name || auth.user?.email || t.anon;
 
   const interestsCount = user?.interests.includes("all") ? categories?.length ?? 0 : user?.interests.length ?? 0;
 
@@ -96,12 +98,32 @@ export default function Profile() {
       >
       <Text style={styles.title}>{t.profile}</Text>
       <View style={styles.avatarRow}>
-        <View style={styles.avatar}>
-          <PauseMark size={30} />
-        </View>
+        <UserAvatar
+          name={user?.display_name || accountName}
+          user={user}
+          size={64}
+          editable
+          busy={avatar.busy}
+          onPress={avatar.pick}
+          testID="profile-avatar"
+        />
         <View style={{ flex: 1 }}>
           <Text style={styles.name} testID="profile-account-name">{accountName}</Text>
           <Text style={styles.sub}>{auth.user?.email && auth.user?.name ? `${auth.user.email} · ` : ""}{user?.completed_story_ids.length ?? 0} {t.stories_completed}</Text>
+          <View style={styles.avatarActions}>
+            <Pressable onPress={avatar.pick} disabled={avatar.busy} hitSlop={6} testID="profile-avatar-change">
+              <Text style={styles.avatarAction}>{user?.avatar_path ? t.avatar_change : t.avatar_add}</Text>
+            </Pressable>
+            {user?.avatar_path ? (
+              <>
+                <Text style={styles.avatarDot}>·</Text>
+                <Pressable onPress={avatar.remove} disabled={avatar.busy} hitSlop={6} testID="profile-avatar-remove">
+                  <Text style={[styles.avatarAction, { color: colors.muted }]}>{t.avatar_remove}</Text>
+                </Pressable>
+              </>
+            ) : null}
+          </View>
+          {avatar.error ? <Text style={styles.avatarError} testID="profile-avatar-error">{avatar.error}</Text> : null}
         </View>
       </View>
 
@@ -418,12 +440,10 @@ const useStyles = makeStyles((colors) => ({
   container: { flex: 1, backgroundColor: colors.surface },
   title: { color: colors.textWarm, fontFamily: typography.displayHero, fontSize: 30, letterSpacing: -0.5 },
   avatarRow: { flexDirection: "row", alignItems: "center", gap: spacing.md, marginTop: spacing.lg },
-  avatar: {
-    width: 56, height: 56, borderRadius: 28, backgroundColor: colors.glassBgLit,
-    alignItems: "center", justifyContent: "center",
-    borderWidth: 1, borderColor: withAlpha(colors.cyan, 0.45),
-    boxShadow: `0px 0px 20px ${colors.cyanGlowSoft}, 0px 8px 18px ${colors.glassShadow}` as any,
-  },
+  avatarActions: { flexDirection: "row", alignItems: "center", gap: 6, marginTop: 6 },
+  avatarAction: { color: colors.brand, fontFamily: typography.bodyBold, fontSize: 13 },
+  avatarDot: { color: colors.muted, fontFamily: typography.body, fontSize: 13 },
+  avatarError: { color: colors.warning, fontFamily: typography.body, fontSize: 12, marginTop: 4 },
   name: { color: colors.onSurface, fontFamily: typography.bodyBold, fontSize: 16 },
   sub: { color: colors.muted, fontFamily: typography.body, fontSize: 13, marginTop: 2 },
   sectionTitle: { color: colors.muted, fontFamily: typography.bodyBold, fontSize: 11, letterSpacing: 2, marginBottom: spacing.sm },

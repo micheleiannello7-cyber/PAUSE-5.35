@@ -163,7 +163,15 @@ export type UserState = {
   display_name?: string | null;
   gender?: Gender | null;
   age?: number | null;
+  avatar_path?: string | null;
+  avatar_version?: string | null;
 };
+
+/** URL della foto profilo (null se l'utente non ne ha una). Versionato → cache immutabile. */
+export function avatarUrl(user: Pick<UserState, "user_id" | "avatar_path" | "avatar_version"> | null | undefined): string | null {
+  if (!user?.avatar_path) return null;
+  return `${BASE}/api/avatar/${user.user_id}?v=${user.avatar_version ?? ""}`;
+}
 
 export type Gender = "man" | "woman" | "other";
 export type ProfileInput = { display_name?: string; gender?: Gender; age?: number };
@@ -319,6 +327,9 @@ export const api = {
     req<UserState>(`/user/preferences`, { method: "POST", body: JSON.stringify({ user_id, ...prefs }) }),
   setProfile: (user_id: string, profile: ProfileInput) =>
     req<UserState>(`/user/profile`, { method: "POST", body: JSON.stringify({ user_id, ...profile }) }),
+  setAvatar: (user_id: string, image_base64: string) =>
+    req<UserState>(`/user/avatar`, { method: "POST", body: JSON.stringify({ user_id, image_base64 }) }),
+  removeAvatar: (user_id: string) => req<UserState>(`/user/${user_id}/avatar`, { method: "DELETE" }),
   toggleBookmark: (user_id: string, story_id: string) =>
     req<UserState>(`/user/bookmark`, { method: "POST", body: JSON.stringify({ user_id, story_id }) }),
   toggleLike: (user_id: string, story_id: string) =>

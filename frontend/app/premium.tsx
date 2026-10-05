@@ -75,7 +75,7 @@ export default function Premium() {
   // Confronto Gratis / Premium: solo funzioni presenti nell'app (vedi backend
   // FREE_/PREMIUM_CAPACITY, HISTORY_FREE_DAYS, FREE_SAVED_LIMIT, EARLY_ACCESS_DAYS
   // e i gate `isPremium` di audio, browse, playlist, stats, accento).
-  type Row = { icon: string; title: string; sub?: string; free: string | false; premium: string | true };
+  type Row = { icon: string; title: string; free: string | false; premium: string | true };
   const quickRows: Row[] = [
     { icon: "layers-outline", title: t.pw_r_sessions, free: "4", premium: "5" },
     { icon: "flash-outline", title: t.pw_r_recharge, free: t.pw_q_recharge_free, premium: t.pw_q_recharge_premium },
@@ -84,15 +84,15 @@ export default function Premium() {
     { icon: "heart-outline", title: t.pw_r_saved_short, free: "20", premium: t.pw_unlimited },
   ];
   const rows: Row[] = [
-    { icon: "layers-outline", title: t.pw_r_sessions, sub: t.pw_r_sessions_sub, free: "4", premium: "5" },
-    { icon: "flash-outline", title: t.pw_r_recharge, sub: t.pw_r_recharge_sub, free: t.pw_r_recharge_free, premium: t.pw_r_recharge_premium },
-    { icon: "school-outline", title: t.pw_r_lessons, sub: t.pw_r_lessons_sub, free: false, premium: true },
-    { icon: "time-outline", title: t.pw_r_history, sub: t.pw_r_history_sub, free: t.pw_r_history_free, premium: t.pw_r_history_premium },
-    { icon: "headset-outline", title: t.pw_r_audio, sub: t.pw_r_audio_sub, free: false, premium: true },
-    { icon: "albums-outline", title: t.pw_r_choose, sub: t.pw_r_choose_sub, free: false, premium: true },
-    { icon: "stats-chart-outline", title: t.pw_r_stats, sub: t.pw_r_stats_sub, free: false, premium: true },
+    { icon: "layers-outline", title: t.pw_r_sessions, free: "4", premium: "5" },
+    { icon: "flash-outline", title: t.pw_r_recharge, free: t.pw_r_recharge_free_short, premium: t.pw_r_recharge_premium_short },
+    { icon: "school-outline", title: t.pw_r_lessons, free: false, premium: true },
+    { icon: "time-outline", title: t.pw_r_history, free: t.pw_r_history_free, premium: t.pw_r_history_premium },
+    { icon: "headset-outline", title: t.pw_r_audio, free: false, premium: true },
+    { icon: "albums-outline", title: t.pw_r_choose, free: false, premium: true },
+    { icon: "stats-chart-outline", title: t.pw_r_stats, free: false, premium: true },
     { icon: "heart-outline", title: t.pw_r_saved, free: "20", premium: t.pw_unlimited },
-    { icon: "sparkles-outline", title: t.pw_r_early, free: t.pw_r_early_free, premium: t.pw_r_early_premium },
+    { icon: "sparkles-outline", title: t.pw_r_early, free: t.pw_r_early_free, premium: t.pw_r_early_premium_short },
     { icon: "color-palette-outline", title: t.pw_r_accent, free: "1", premium: "5" },
   ];
 
@@ -208,7 +208,6 @@ export default function Premium() {
                 </View>
                 <Text style={styles.cardTitle}>{f.title}</Text>
                 <Text style={styles.cardSub}>{f.sub}</Text>
-                <Ionicons name="arrow-forward" size={14} color={colors.brand} style={styles.cardArrow} />
               </View>
             ))}
           </View>
@@ -224,9 +223,9 @@ export default function Premium() {
           {/* ---- Confronto rapido (5 righe) · espandibile alla lista completa ---- */}
           <View style={styles.table} testID="paywall-compare">
             <View style={styles.tableHead}>
-              <Text style={styles.compareTitle} testID="paywall-compare-title">{t.pw_quick_compare}</Text>
-              <Text style={[styles.colLabel, styles.colFree]}>{t.pw_free_label}</Text>
-              <View style={styles.colPremiumHead}>
+              <Text style={styles.compareTitle} testID="paywall-compare-title" numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.8}>{t.pw_quick_compare}</Text>
+              <Text style={[styles.colLabel, styles.colFree, allFeatures && styles.colFreeWide]}>{t.pw_free_label}</Text>
+              <View style={[styles.colPremiumHead, allFeatures && styles.colPremiumWide]}>
                 <Text style={styles.colPremiumText}>{t.pw_premium_label}</Text>
               </View>
             </View>
@@ -236,23 +235,22 @@ export default function Premium() {
                   <Ionicons name={r.icon as any} size={14} color={colors.onSurfaceSecondary} />
                 </View>
                 <View style={styles.rowText}>
-                  <Text style={styles.rowTitle} numberOfLines={allFeatures ? 2 : 1}>{r.title}</Text>
-                  {allFeatures && r.sub ? <Text style={styles.rowSub}>{r.sub}</Text> : null}
+                  <Text style={styles.rowTitle} numberOfLines={2}>{r.title}</Text>
                 </View>
-                <View style={styles.cellFree}>
+                <View style={[styles.cellFree, allFeatures && styles.colFreeWide]}>
                   {r.free === false
                     ? <Ionicons name="remove" size={16} color={colors.muted} />
                     : <Text style={styles.cellFreeText} numberOfLines={2}>{r.free}</Text>}
                 </View>
-                <View style={styles.cellPremium}>
+                <View style={[styles.cellPremium, allFeatures && styles.colPremiumWide]}>
                   {r.premium === true
                     ? <Ionicons name="checkmark-circle-outline" size={18} color={colors.brand} />
-                    : <Text style={styles.cellPremiumText} numberOfLines={3}>{r.premium}</Text>}
+                    : <Text style={styles.cellPremiumText} numberOfLines={2}>{r.premium}</Text>}
                 </View>
               </View>
             ))}
             {/* Colonna Premium: velo cyan + glow, sotto alle celle. */}
-            <View pointerEvents="none" style={styles.premiumColumnTint} />
+            <View pointerEvents="none" style={[styles.premiumColumnTint, allFeatures && styles.premiumColumnTintWide]} />
           </View>
 
           {/* ---- CTA ---- */}
@@ -327,6 +325,9 @@ const FAN_W = 108;
 const FAN_H = 144;
 const COL_FREE_W = 58;
 const COL_PREMIUM_W = 78;
+// Lista completa espansa: valori più lunghi ("Dopo 7 giorni"), colonne più larghe.
+const COL_FREE_W_WIDE = 72;
+const COL_PREMIUM_W_WIDE = 92;
 
 const useStyles = makeStyles((colors) => ({
   container: { flex: 1, backgroundColor: colors.surface },
@@ -409,8 +410,7 @@ const useStyles = makeStyles((colors) => ({
     borderWidth: 1, borderColor: withAlpha(colors.brand, 0.3), boxShadow: `0px 0px 14px ${withAlpha(colors.brand, 0.25)}`,
   },
   cardTitle: { color: colors.onSurface, fontFamily: typography.bodyBold, fontSize: 14, lineHeight: 18, marginTop: spacing.sm, paddingHorizontal: spacing.md },
-  cardSub: { color: colors.onSurfaceSecondary, fontFamily: typography.body, fontSize: 11.5, lineHeight: 16, marginTop: 4, paddingHorizontal: spacing.md, paddingRight: spacing.lg },
-  cardArrow: { alignSelf: "flex-end", marginTop: spacing.sm, marginRight: spacing.md },
+  cardSub: { color: colors.onSurfaceSecondary, fontFamily: typography.body, fontSize: 11.5, lineHeight: 16, marginTop: 4, marginBottom: spacing.xs, paddingHorizontal: spacing.md },
   allBtn: {
     flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, alignSelf: "stretch",
     height: 46, borderRadius: radius.pill, marginTop: spacing.lg,
@@ -418,7 +418,7 @@ const useStyles = makeStyles((colors) => ({
   },
   allBtnText: { color: colors.brand, fontFamily: typography.bodyBold, fontSize: 14 },
   // Confronto rapido
-  compareTitle: { flex: 1, color: colors.onSurface, fontFamily: typography.displayBold, fontSize: 17 },
+  compareTitle: { flex: 1, color: colors.onSurface, fontFamily: typography.displayBold, fontSize: 16 },
   table: {
     marginTop: spacing.xl, borderRadius: radius.lg + 2, backgroundColor: withAlpha(colors.surfaceDeep, 0.85),
     borderWidth: 1, borderColor: withAlpha(colors.brand, 0.14), overflow: "hidden", position: "relative",
@@ -432,16 +432,18 @@ const useStyles = makeStyles((colors) => ({
     boxShadow: `0px 0px 16px ${withAlpha(colors.brand, 0.3)}`,
   },
   colPremiumText: { color: colors.brand, fontFamily: typography.bodyBold, fontSize: 12 },
-  row: { flexDirection: "row", alignItems: "center", paddingHorizontal: spacing.md, paddingVertical: 7, zIndex: 1 },
+  row: { flexDirection: "row", alignItems: "center", paddingHorizontal: spacing.md, paddingVertical: 8, zIndex: 1 },
   rowLast: { paddingBottom: spacing.md },
   rowIcon: { width: 20, alignItems: "center", marginRight: spacing.sm },
   rowText: { flex: 1, minWidth: 0, paddingRight: spacing.xs },
   rowTitle: { color: colors.onSurface, fontFamily: typography.bodyMedium, fontSize: 13, lineHeight: 17 },
-  rowSub: { color: colors.muted, fontFamily: typography.body, fontSize: 11, lineHeight: 15, marginTop: 1 },
   cellFree: { width: COL_FREE_W, alignItems: "center", justifyContent: "center" },
-  cellFreeText: { color: colors.onSurfaceSecondary, fontFamily: typography.bodyMedium, fontSize: 12.5, textAlign: "center", lineHeight: 15 },
+  cellFreeText: { color: colors.onSurfaceSecondary, fontFamily: typography.bodyMedium, fontSize: 12.5, textAlign: "center", lineHeight: 15, paddingHorizontal: 2 },
   cellPremium: { width: COL_PREMIUM_W, marginLeft: spacing.xs, alignItems: "center", justifyContent: "center" },
   cellPremiumText: { color: colors.brand, fontFamily: typography.bodyBold, fontSize: 12.5, textAlign: "center", lineHeight: 15 },
+  colFreeWide: { width: COL_FREE_W_WIDE },
+  colPremiumWide: { width: COL_PREMIUM_W_WIDE },
+  premiumColumnTintWide: { width: COL_PREMIUM_W_WIDE + 8 },
   premiumColumnTint: {
     position: "absolute", top: spacing.sm, bottom: spacing.sm, right: spacing.md - 4, width: COL_PREMIUM_W + 8, borderRadius: radius.md,
     backgroundColor: withAlpha(colors.brand, 0.07), borderWidth: 1, borderColor: withAlpha(colors.brand, 0.18),

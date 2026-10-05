@@ -21,6 +21,7 @@ import { HomeStoryDeck, CardRect, DECK_BELOW_CARD_H } from "@/src/components/hom
 import { StoryMorph, MORPH_DURATION, MORPH_EASING } from "@/src/components/story-morph";
 import { useMorphHost } from "@/src/components/morph-host";
 import { LimitBadge } from "@/src/components/limit-badge";
+import { UserAvatar } from "@/src/components/user-avatar";
 import { useLimitGate } from "@/src/hooks/use-limit-gate";
 import { OnboardingToast, OnboardingNotice } from "@/src/components/onboarding-toast";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -294,12 +295,7 @@ export default function Discover() {
         <PauseLogo prominent />
         <View style={styles.headerRight}>
           <LimitBadge testID="home-credits" timerOnTap />
-          {firstName ? (
-            <View style={styles.greeting} testID="home-greeting">
-              <Text style={styles.greetingHi} numberOfLines={1}>{t.greeting},</Text>
-              <Text style={styles.greetingName} numberOfLines={1} testID="home-greeting-name">{firstName}</Text>
-            </View>
-          ) : null}
+          {firstName ? <UserAvatar name={firstName} user={userState} /> : null}
         </View>
       </Animated.View>
       <View testID="home-content" style={[styles.content, { width }]}>
@@ -357,10 +353,7 @@ export default function Discover() {
 const useStyles = makeStyles((colors) => ({
   container: { flex: 1, backgroundColor: colors.surface, alignItems: "center" },
   header: { paddingHorizontal: 12, height: 58, flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
-  headerRight: { flexShrink: 1, flexDirection: "row", alignItems: "center", gap: spacing.md },
-  greeting: { flexShrink: 1, alignItems: "flex-end" },
-  greetingHi: { color: colors.onSurfaceTertiary, fontFamily: typography.bodyMedium, fontSize: 11, letterSpacing: 0.3, lineHeight: 14 },
-  greetingName: { color: colors.brand, fontFamily: typography.displayBold, fontSize: 17, letterSpacing: -0.2, lineHeight: 21, maxWidth: 130 },
+  headerRight: { flexDirection: "row", alignItems: "center", gap: spacing.md },
   content: { flex: 1, alignSelf: "center", paddingBottom: 12 },
   deckArea: { flex: 1, justifyContent: "center", minHeight: 190 },
   catsSection: {},

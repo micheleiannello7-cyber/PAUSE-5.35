@@ -77,15 +77,146 @@
    "5": "In Svezia un abete rosso chiamato Old Tjikko ha radici di 9.550 anni: il tronco che vedi ha poche centinaia di anni, ma l’apparato radicale continua a produrre nuovi fusti da quando finì l’ultima glaciazione. In California i pini dai coni setolosi superano i 4.800 anni con un solo tronco contorto. E in Utah un bosco di pioppi tremuli, Pando, è un unico individuo di 47.000 fusti collegati dalle radici, forse vecchio di decine di migliaia di anni. Un albero può essere più antico di ogni civiltà."
   }
  },
+ "lez-algoritmo": {
+  "en": {
+   "4": "Now apply the idea to an everyday decision: whether to go out by bike. Write a tiny algorithm: check the weather; if it is raining, take public transport; otherwise check time; if less than 20 minutes, take public transport; else check the bike, find lock and lights, then leave.",
+   "5": "Now that you know what an algorithm is, you will recognise the ones around you. A social feed ranks posts by how long similar ones kept you watching; your sat-nav compares thousands of routes in a second; a flight's price changes because an algorithm estimates how much you are willing to pay. None is magic and none is neutral: each optimises a goal chosen by someone. The useful question in front of any automated result is always the same: which problem was it solving, and for whom?"
+  },
+  "it": {
+   "4": "Ora applica l’idea a un gesto quotidiano: decidere se uscire in bici. Scrivi un piccolo algoritmo: controlla il meteo; se piove, scegli i mezzi; altrimenti controlla il tempo; se è meno di 20 minuti, prendi i mezzi; se no, verifica la bici; finché non trovi lucchetto e luci, cercali; poi esci. Così un problema confuso diventa più chiaro. Se ti blocchi, manca una condizione precisa o un punto finale. Correggere un algoritmo spesso significa solo togliere ambiguità.",
+   "5": "Ora che sai cos'è un algoritmo, riconoscerai quelli che ti circondano. Il feed dei social ordina i post in base a quanto ti hanno trattenuto quelli simili; il navigatore confronta migliaia di percorsi in un secondo; il prezzo di un volo cambia secondo una stima di quanto sei disposto a pagare. Nulla di tutto questo è magico e nulla è neutrale: ogni algoritmo ottimizza un obiettivo deciso da qualcuno. Davanti a un risultato automatico, chiediti sempre: quale problema stava risolvendo, e per chi?"
+  }
+ },
+ "lez-bias-conferma": {
+  "en": {
+   "4": "Use it on a small but real decision, like choosing a phone, a supplement, or a neighbourhood to move to. Write your starting belief in one sentence: “this is the best option for me.” Then set a rule: read at least two reliable sources against your view and one neutral one. Notice irritation, relief, or the urge to close the page. At the end, ask not “who was right?” but “what improved my decision?”",
+   "5": "Today confirmation bias has a powerful ally: platforms. Social networks show you more of what you already engaged with because it keeps you longer, creating a bubble where everyone seems to think like you. Search engines suggest confirming questions too. To defend yourself, follow serious opposite views, search the opposing thesis in its own words, and distrust the feeling that “everyone thinks so”."
+  },
+  "it": {
+   "4": "Usalo su una decisione piccola ma reale, come scegliere un telefono, un integratore o un quartiere in cui trasferirti. Scrivi: “questo è la scelta migliore per me”. Poi raccogli almeno due fonti affidabili contrarie e una neutra. Nota se provi irritazione, sollievo o voglia di chiudere la pagina: spesso stai proteggendo un’idea più che valutando fatti. Alla fine chiediti: “quale informazione ha davvero cambiato la qualità della mia decisione?”.",
+   "5": "Oggi il bias di conferma ha un alleato potente: le piattaforme. I social mostrano contenuti simili a quelli con cui hai già interagito, perché ti trattengono di più, e ti costruiscono attorno una bolla in cui tutti sembrano pensare come te; il motore di ricerca suggerisce domande che confermano ciò che cerchi. Per difenderti, segui deliberatamente fonti serie di opinione opposta, cerca la tesi contraria con le sue parole e non con le tue, e diffida della sensazione che “tutti la pensano così”."
+  }
+ },
+ "lez-calendario": {
+  "it": {
+   "5": "Il nostro non è l'unico modo di contare il tempo. Il calendario islamico è puramente lunare: dodici mesi di 29 o 30 giorni, per un anno di 354, e così il Ramadan cade ogni anno undici giorni prima. Quello ebraico e quello cinese sono lunisolari: seguono la Luna ma aggiungono un tredicesimo mese sette volte ogni diciannove anni. Il calendario etiope ha tredici mesi ed è indietro di sette anni rispetto al nostro."
+  }
+ },
+ "lez-ciclo-acqua": {
+  "en": {
+   "4": "Think about a city rainstorm. Some water lands on roofs and asphalt, runs into drains and reaches channels or rivers quickly, often without properly recharging the soil. Another portion sinks into park ground and can reach aquifers, which supply many water systems. So when you turn on the tap, you may be using rain that fell months or years ago and travelled slowly underground. That is why green spaces, permeable ground and small daily choices matter."
+  },
+  "it": {
+   "4": "Pensa a un temporale in città. Una parte dell’acqua cade su tetti e asfalto, entra nei tombini e finisce presto in canali o fiumi, spesso senza ricaricare bene il suolo; un’altra penetra nei terreni dei parchi e può raggiungere le falde che alimentano molti acquedotti. Quando apri il rubinetto, usi quindi acqua caduta come pioggia mesi o anni fa, dopo un lento viaggio sotto terra."
+  }
+ },
+ "lez-classificare-animali": {
+  "en": {
+   "4": "Next time you see an animal in a documentary, at the zoo, or on a sign in a park, classify it before looking up its name. Start with backbone, then breathing, body covering, and birth. Turtle: vertebrate, lungs, dry scales, eggs: reptile. Adult frog: vertebrate, lungs, moist skin, eggs: amphibian. Use several clues together: one alone can mislead, but the combination usually guides you to the right class."
+  },
+  "it": {
+   "4": "La prossima volta che vedi un animale in un documentario, allo zoo o perfino su un cartello al parco, prova a classificarlo senza cercare subito il nome. Parti da: ha la colonna vertebrale? Se sì, chiediti come respira, che rivestimento ha il corpo e come nascono i piccoli. Una tartaruga: vertebrato, polmoni, squame secche, uova, quindi rettile. Una rana adulta: vertebrato, polmoni, pelle umida, uova, quindi anfibio. Usa più indizi insieme: uno solo può confondere."
+  }
+ },
+ "lez-ecolocalizzazione": {
+  "en": {
+   "4": "To feel the principle without equipment, step into an empty room or stand under a porch and clap once. Near a wall, the sound comes back almost at once and feels sharper; in a larger space or with distant hard surfaces, the echo lingers longer. Your brain is already using those returns to judge whether a place is tight, open, soft or hard. That is why a church, a gym and a furnished living room all “sound” different."
+  },
+  "it": {
+   "4": "Per sentire il principio senza strumenti, entra in una stanza vuota o sotto un portico e batti le mani una volta. Vicino a una parete il suono torna quasi subito e sembra più \"secco\"; in uno spazio grande o con superfici lontane la coda dell'eco è più lunga. Non misuri numeri come un pipistrello, ma il tuo cervello usa già quei ritorni per capire se un ambiente è stretto, ampio, morbido o duro."
+  }
+ },
  "lez-energia-conservazione": {
   "en": {
    "4": "A good final test is to look at an electricity bill. Energy use is listed not in joules but in kilowatt-hours: 1 kWh equals 3.6 million joules, so a 1,500-watt hair dryer running for one hour uses 1.5 kWh. That energy does not vanish: it becomes mostly heat in the air, plus a little sound and motion from the fan. A phone charger or light bulb does the same basic thing, so “saving energy” really means avoiding unnecessary conversions."
+  },
+  "it": {
+   "4": "Un buon test finale è guardare una bolletta elettrica. I consumi non sono scritti in joule ma in kilowattora: 1 kWh corrisponde a 3,6 milioni di joule. Se un phon da 1.500 watt resta acceso per un’ora, usa 1,5 kWh. Quell’energia non scompare: diventa soprattutto calore nell’aria, più un po’ di suono e movimento della ventola. Così capisci che “risparmiare energia” vuol dire usare meno trasformazioni inutili.",
+   "5": "Se l'energia si conserva, perché parliamo di crisi energetica? Perché non tutta l'energia è ugualmente utile. Quando bruci benzina, l'energia chimica diventa movimento e calore; il calore si disperde nell'aria e non puoi più raccoglierlo per far ripartire l'auto. La quantità totale non cambia, ma la qualità sì: degrada verso forme meno utilizzabili. È il secondo principio della termodinamica: per questo il moto perpetuo è impossibile e servono sempre nuove fonti."
+  }
+ },
+ "lez-fusi-orari": {
+  "it": {
+   "5": "Al puzzle dei fusi si aggiunge l'ora legale: circa settanta paesi spostano le lancette avanti di un'ora in primavera per sfruttare la luce della sera, e le riportano indietro in autunno. L'Europa lo fa nell'ultima domenica di marzo e di ottobre, gli Stati Uniti in date diverse, e l'emisfero sud nelle stagioni opposte: per qualche settimana la differenza tra Roma e New York cambia."
+  }
+ },
+ "lez-inflazione": {
+  "it": {
+   "5": "L'inflazione ha due estremi, entrambi pericolosi. La deflazione, il calo generale dei prezzi, sembra una buona notizia ma paralizza l'economia: se tutto costerà meno domani, nessuno compra oggi, le aziende vendono meno, licenziano e i debiti diventano più pesanti; il Giappone ci ha convissuto per vent'anni. L'iperinflazione, oltre il 50% al mese, distrugge la moneta in pochi mesi. Per questo le banche centrali puntano a circa il 2%."
+  }
+ },
+ "lez-leggere-nuvole": {
+  "en": {
+   "4": "To tie it all together, make a six-hour forecast from what you can see now, then compare it with what happens later. Small, separated morning cumulus: “stable until evening.” Increasing cirrus plus a halo: “deterioration by tomorrow.” One even grey layer: light, steady rain. Don’t judge a single cloud: watch the sky’s trend over one or two hours, with the wind and where clouds come from. After a few days, your eye becomes much more reliable."
+  },
+  "it": {
+   "4": "Per chiudere il cerchio, prova una previsione di sei ore con ciò che vedi adesso e confrontala più tardi col risultato reale. Al mattino, cumuli piccoli e separati: “stabile fino a sera”. Cirri in aumento con alone: “peggioramento entro domani”. Strato grigio uniforme: pioggia debole ma continua. Non basarti su una sola nuvola: conta la tendenza del cielo in una o due ore, insieme al vento e alla direzione delle nubi. In pochi giorni il tuo occhio diventa molto più affidabile.",
+   "5": "Alcune nuvole meritano di essere riconosciute per il loro spettacolo. Le lenticolari, a disco, si formano sopra le montagne e restano ferme mentre il vento le attraversa: spesso sembrano dischi volanti. Le mammatus, sacche sotto un temporale, indicano turbolenza estrema. Le scie degli aerei che persistono e si allargano segnalano aria umida in quota e spesso precedono un peggioramento. Le nubi nottilucenti, altissime e argentate, si vedono solo d'estate dopo il tramonto verso nord."
+  }
+ },
+ "lez-linea-del-tempo": {
+  "en": {
+   "4": "Before trusting your answer, do two fast checks. If you convert a year into a century, ask whether it falls at the start, middle, or end: 1900 is in the 19th century, while 1901 begins the 20th. With BC dates, larger numbers are earlier: 480 BC comes before 323 BC. Across the birth of Christ, subtract one and test a tiny example: 1 BC to AD 1 is 1 year. This catches most common mistakes in books, maps, or museum timelines.",
+   "5": "Our count is not the only one. The Hebrew calendar is in the 5780s, counting from the creation of the world according to tradition; the Islamic one starts in 622 AD, the year of Muhammad's hijra, and is lunar, so it gains a year every 33 of ours; the Chinese calendar numbers years in cycles of sixty. Even 'BC' is a late invention: proposed by a monk in 525, it became common only a thousand years later. Always ask who was counting and from where."
+  },
+  "it": {
+   "4": "Prima di fidarti del risultato, fai due verifiche rapide. Se converti un anno in secolo, chiediti se è all’inizio, nel mezzo o alla fine: 1900 è XIX secolo, 1901 XX. Con date a.C., controlla che i numeri più grandi siano più antichi: 480 a.C. viene prima di 323 a.C. Se attraversi Cristo, togli uno: da 1 a.C. a 1 d.C. passa 1 anno. Questo mini controllo evita quasi tutti gli errori tipici.",
+   "5": "Il nostro conteggio non è l'unico. Il calendario ebraico è al 5780 e rotti, contando dalla creazione del mondo secondo la tradizione; quello islamico parte dal 622 d.C., l'anno dell'egira di Maometto, ed è lunare, quindi guadagna un anno ogni 33 dei nostri; il calendario cinese numera gli anni per cicli di sessanta. Quando leggi una data antica chiediti sempre chi contava e da dove: la linea del tempo ha tanti punti zero quante culture."
+  }
+ },
+ "lez-memoria-tecniche": {
+  "en": {
+   "4": "Put it all together with a simple case: remembering the name of someone you’ve just met. When you hear it, pay attention and say it back once: that helps encoding. Then make a quick hook, linking “Maria” to someone you know or a vivid image. Minutes later, recall it without help. Bring it back later that day, then the next day, then a few days later. If you blank, that isn’t failure: the retrieval attempt trains memory. For names, concepts, or lists, the same method applies."
+  },
+  "it": {
+   "4": "Metti insieme tutto con un caso semplice: ricordare il nome di una persona appena conosciuta. Quando lo senti, presta attenzione e ripetilo subito una volta; poi crea un aggancio rapido, per esempio “Marco” con un amico o un’immagine mentale. Dopo qualche minuto richiamalo senza aiuti, poi più tardi, il giorno dopo e dopo alcuni giorni. Se fai mente vuota, non è un fallimento: è il recupero che allena la memoria. Con nomi, concetti o liste, il principio resta identico.",
+   "5": "I campioni di memoria non hanno cervelli speciali: usano un metodo antico di 2.500 anni. Scegli un percorso che conosci a memoria, come casa tua o la strada per il lavoro, e colloca in ogni punto un'immagine assurda e vivida della cosa da ricordare: il pollo suona il campanello, il latte allaga l'ingresso. Per richiamare, ripercorri il tragitto. Il cervello ricorda luoghi e immagini molto meglio di parole: il palazzo della memoria traduce le seconde nei primi."
+  }
+ },
+ "lez-metodo-scientifico": {
+  "en": {
+   "4": "This method is not just for labs or houseplants. Use it when you wonder why you sleep badly, why you are always late, or why your energy bill jumped. Pick one question, one possible cause, and a simple test. For example: skip screens for the last 30 minutes before sleep for one week, keep the rest the same, then note what happened. You are building a habit of mind: replacing vague impressions with evidence good enough to help you make better decisions."
+  },
+  "it": {
+   "4": "Questo metodo non serve solo in laboratorio o con le piante. Puoi usarlo per capire perché dormi male, arrivi sempre tardi o la bolletta è salita. Prendi una domanda, scrivi una possibile causa e scegli un test semplice: per esempio, se pensi \"Dormo male perché guardo il telefono a letto\", per una settimana eviti lo schermo negli ultimi 30 minuti, lasci uguali gli orari e poi annoti com'è andata."
   }
  },
  "lez-orbite-gravita": {
   "en": {
    "4": "A practical way to spot an orbit is to look at the satellites you rely on every day. Low satellites, close to Earth, feel stronger gravity, so they must move faster and complete an orbit in about 90 minutes. Geostationary satellites are much farther out, where gravity is weaker, so they orbit more slowly and take 24 hours, staying above the same point on the equator. Change the distance, and you change the needed speed and the orbit length.",
    "5": "To leave Earth entirely, orbiting is not enough: you need escape velocity, 11.2 kilometres per second, over 40,000 kilometres per hour. At that speed Newton's cannonball never comes back, because gravity slows it but not enough to stop it. Interplanetary probes then use other planets as slingshots: passing close to Jupiter they steal a little of its orbital energy. The Voyagers, launched in 1977, thereby exceeded the Sun's escape velocity and now travel through interstellar space."
+  },
+  "it": {
+   "4": "Un modo concreto per riconoscere un’orbita è guardare i satelliti che usi ogni giorno. Quelli bassi, vicini alla Terra, sentono una gravità più forte: vanno più veloci e fanno il giro in circa 90 minuti, perciò molti satelliti per immagini e la Stazione Spaziale Internazionale passano spesso sopra zone diverse. I geostazionari, molto più lontani, impiegano 24 ore e restano sopra lo stesso punto dell’equatore.",
+   "5": "Per lasciare del tutto la Terra non basta orbitare: serve la velocità di fuga, 11,2 chilometri al secondo, oltre 40.000 chilometri l'ora. Così la palla di cannone di Newton non torna più indietro. Le Voyager, lanciate nel 1977, passando vicino a Giove hanno superato anche la fuga dal Sole e ora viaggiano nello spazio interstellare."
+  }
+ },
+ "lez-orientarsi-stelle": {
+  "en": {
+   "4": "Before you use the stars to choose a direction, do a quick reality check against the horizon. Trees, hills, and buildings can make Polaris, or the point below the Southern Cross, seem lower or higher than it really is. So first find the clearest stretch of horizon and make sure the sky is clear enough to pick out the reference stars confidently. If you are unsure, trace the line again a few minutes later."
+  },
+  "it": {
+   "4": "Prima di usare le stelle per scegliere una direzione, verifica in fretta con l’orizzonte. Alberi, montagne e palazzi possono farti credere che la Polare o il punto sotto la Croce del Sud siano più bassi o più alti del reale. Cerca un orizzonte libero e un cielo limpido. Se hai un dubbio, ripeti dopo qualche minuto: le stelle si spostano lentamente, ma la geometria resta uguale e riduce molto gli errori."
+  }
+ },
+ "lez-password-sicura": {
+  "en": {
+   "4": "Now apply the method to three accounts. For your bank and primary email, let a password manager create long, unique strings you never memorise. For one password you do want to remember, like your computer login or the manager itself, invent a four- or five-word passphrase, at least 16 characters, with nothing personal. If you'd hide it on a sticky note, simplify the structure and make the words more random.",
+   "5": "Remembering twenty different phrases is impossible: that is what password managers are for. You remember one very long password, and the program generates and stores the others, encrypted, filling them in on sites and apps. If the manager is hacked, serious managers still cannot read your data without your master key. The real risk is reusing the same password everywhere. Pick a manager, import what you have, and replace email and banking first."
+  },
+  "it": {
+   "4": "Ora applica il metodo a tre account diversi. Per banca ed email principale, lascia fare al gestore di password: creerà stringhe lunghe e uniche che non devi ricordare. Per una password da tenere a mente, come quella del computer o del gestore, inventa una frase casuale di quattro o cinque parole, lunga almeno 16 caratteri e senza riferimenti personali.",
+   "5": "Ricordare venti frasi diverse è impossibile: per questo esistono i gestori di password. Ne ricordi una sola, molto lunga, e il programma genera e conserva tutte le altre, cifrate, compilando al posto tuo siti e app. Il timore che se bucano il gestore perdi tutto è comprensibile, ma quelli seri non conoscono la tua chiave principale: il rischio reale, oggi, è riutilizzare la stessa password ovunque."
+  }
+ },
+ "lez-valutare-fonte": {
+  "en": {
+   "4": "Imagine a photo spreading with the caption: “Protests in the city today.” Before sharing it, run the full check. Who posted it: a witness, a party, an anonymous page? When was it actually taken: today or years ago? For whom is it shaped, and why circulated? Then seek independent confirmation. The photo may be real but the context false.",
+   "5": "Photos and videos deserve a chapter of their own, because they look like evidence and are actually stories. A photograph has an author who chose the framing, the moment and what to leave out; today it can be generated from nothing. Check reverse image search, whether details match place and date, and hands, text and reflections. An image without a source is a claim, not proof."
+  },
+  "it": {
+   "4": "Immagina una foto che circola con la scritta: \"Proteste in città oggi\". Prima di condividerla, fai un controllo completo: chi la pubblica, quando è stata scattata davvero, per chi è confezionato il messaggio e perché viene diffusa. Poi cerca conferme indipendenti, magari con una ricerca inversa e con cronache locali. Spesso la foto è autentica ma il contesto è falso: è qui che si sbaglia più spesso.",
+   "5": "Le foto e i video meritano un capitolo a parte, perché sembrano prove e sono racconti. Una foto ha un autore che sceglie inquadratura, momento e cosa lasciare fuori; oggi può anche essere generata da zero. Tre controlli veloci: la ricerca inversa mostra se e quando è già circolata; ombre, cartelli, targhe e meteo devono combaciare con luogo e data; mani, testi e riflessi sono punti dove l'intelligenza artificiale sbaglia ancora. Senza fonte, un'immagine è un'affermazione, non una prova."
   }
  },
  "memory-basics": {
@@ -432,6 +563,14 @@
    "3": "Gratitude is not a universal cure. It works less well when used as a moral duty, a slogan, or a way to deny pain, anger, or injustice. Telling someone in severe burnout to “just be grateful” can even increase guilt. The same happens when the exercise becomes generic, mechanical, or repetitive. Gratitude helps when it expands experience, not when it censors it.",
    "4": "The most effective form is often concrete, brief, and personal. Instead of making an automatic list, choose one real detail and ask why it mattered. You can do this in two minutes: “What went a little better today?” and “Who or what contributed to that?” The second question is crucial, because it turns a vague note into real recognition. Some people also benefit from expressing gratitude directly with a short, specific message.",
    "5": "If you want to test gratitude without unrealistic expectations, try it for one week. Each evening, write down one thing you feel grateful for, but make it specific, recent, and plausible. Then add one line about why it affected you. After seven days, do not ask, “Am I a new person?” Instead, look for three signs: Do you notice small helps more easily? Do you feel slightly less tense? Do you thank people more spontaneously?"
+  },
+  "it": {
+   "0": "La gratitudine non è ignorare i problemi né obbligarsi a essere allegri. In psicologia è riconoscere che qualcosa di buono è accaduto e che spesso arriva, almeno in parte, da fuori di noi: da una persona, da una circostanza, dal tempo o dalla fortuna. Questo sposta la mente dal “mi manca” al “c’è anche questo”. Dopo una giornata storta, puoi notare anche il collega che ti ha coperto una riunione. Non cancella il brutto: aggiunge informazione emotiva.",
+   "1": "Gli studi mostrano che praticare gratitudine con regolarità può aumentare leggermente benessere, umore positivo e qualità delle relazioni, e in alcuni casi migliorare il sonno e ridurre lo stress percepito. L’effetto però non è magico né enorme: in media è piccolo o moderato e varia. Scrivere ogni sera tre cose apprezzate per due settimane può aiutare, non trasformare.",
+   "2": "La gratitudine sembra agire attraverso più meccanismi. Allena l’attenzione a notare risorse, aiuti e momenti utili che il cervello, preso dalle minacce, trascura; rafforza i legami sociali, perché riconoscere il bene ricevuto aumenta vicinanza e fiducia; e interrompe per un attimo la ruminazione su ciò che non va. I problemi restano, ma il tono emotivo complessivo può cambiare.",
+   "3": "La gratitudine non è una cura universale. Funziona meno se diventa obbligo morale, slogan o un modo per negare dolore, rabbia e ingiustizia: dire a qualcuno in pieno burnout “sii grato” può perfino aumentare il senso di colpa. Anche frasi generiche o meccaniche svuotano l’esercizio. Aiuta quando amplia l’esperienza, non quando la censura.",
+   "4": "La forma più efficace è spesso concreta, breve e personale. Invece di un elenco automatico, scegli un dettaglio reale e chiediti perché conta: “Cosa è andato un po’ meglio oggi?” e “Da cosa o da chi è dipeso?”. Questo passaggio trasforma una nota vaga in un riconoscimento vero. Per esempio: non solo “buon caffè”, ma “il barista mi ha visto agitato e ha fatto una battuta che mi ha rimesso in moto”.",
+   "5": "Se vuoi testarla senza aspettative irrealistiche, prova per 7 giorni. Ogni sera scrivi una sola cosa per cui provi gratitudine: deve essere specifica, recente e plausibile. Poi aggiungi perché ha avuto effetto su di te. Dopo sette giorni, non chiederti se sei una persona nuova: osserva se noti più facilmente i piccoli aiuti, ti senti un po’ meno contratto e ringrazi più spesso in modo spontaneo."
   }
  },
  "v8-lez-earth-s-seasons-tilt-not-distance": {
@@ -507,6 +646,14 @@
   }
  },
  "v8-lez-how-a-weather-satellite-works-and-what-it-sees": {
+  "en": {
+   "0": "A weather satellite is an automatic observatory that circles Earth and watches it from above with instruments sensitive to light and heat. It does not “see” only like human eyes do: it measures different signals and turns them into images meteorologists can use. Some stay above the same region, others pass over different areas, changing what they collect.",
+   "1": "The two main kinds of weather satellites are defined mostly by their orbit. A geostationary satellite is very far away, above the equator, and takes 24 hours to go around Earth, so it appears fixed over the same half of the globe. A polar satellite flies much lower near the poles while Earth rotates beneath it, letting it observe nearly the whole planet in finer detail.",
+   "2": "On board are sensors that collect electromagnetic radiation: visible light, infrared, and sometimes microwaves. Visible channels show clouds, land, and sea somewhat like a photograph, but work best in daylight. Infrared measures heat from surfaces and clouds, so it works at night too. Microwaves can help estimate rainfall, humidity, and ice properties by passing through part of the cloud layer.",
+   "3": "A satellite does not simply send down a ready-made picture: it records numerical signals, transmits them to the ground, and computers convert them into images. Each sensor scans Earth line by line. The data are calibrated, corrected, and colored to make them readable. Sometimes the colors are “false,” chosen to highlight differences the eye would not easily notice.",
+   "4": "A weather satellite can see the shape and movement of clouds, the temperature of the sea and land surface, water vapor in the atmosphere, and in some cases snow, ice, smoke, or dust. But it does not observe everything directly. Wind is often estimated by tracking clouds between images, and rain is sometimes inferred from cloud structure and temperature or from specific sensors.",
+   "5": "Satellite images are used both to watch current weather and to improve forecasts made by numerical weather models. The data are fed into meteorological computers and combined with radar, buoys, ground stations, and weather balloons to create a more complete picture of the atmosphere. Satellites are especially valuable over oceans and deserts, where direct observations are sparse."
+  },
   "it": {
    "0": "Un satellite meteo è un osservatorio automatico che gira attorno alla Terra e la guarda dall'alto con strumenti sensibili alla luce e al calore. Non “vede” solo come i nostri occhi: misura segnali diversi e li trasforma in immagini utili ai meteorologi. Alcuni restano sopra la stessa zona, altri passano su regioni diverse a ogni orbita. Questo cambia le informazioni raccolte.",
    "1": "I due grandi tipi di satelliti meteo si distinguono soprattutto per l'orbita. Un geostazionario è molto lontano, sopra l'equatore, e impiega 24 ore a fare un giro: così sembra fermo e controlla sempre la stessa metà del globo. Un polare vola più basso e passa vicino ai poli mentre la Terra ruota sotto di lui. Col tempo osserva quasi tutto il pianeta con più dettaglio.",
@@ -823,6 +970,14 @@
   }
  },
  "v8-lez-spotting-a-deepfake-6-practical-checks": {
+  "en": {
+   "0": "Your first check is not technical: ask where the clip comes from and why it is spreading now. A deepfake works best when you are distracted, angry, or amazed. Check who posted it, whether a verifiable source is named, and whether reliable outlets show the same material. If it exists only as reposts, short cuts, or anonymous uploads, be more cautious.",
+   "1": "Next, move to the face itself. Many deepfakes look convincing at a glance but break down around the hairline, jaw edges, teeth, ears, glasses, and skin around the eyes. Look for sudden shifts in sharpness or skin that seems too smooth, almost plastic. If the head turns oddly, the face may seem pasted on, with quality changing frame to frame.",
+   "2": "Your third step is to compare lip movement with the audio. In manipulated clips, explosive consonants like p, b, and m are useful because the lips must close clearly. If you hear the sound but the mouth does not form it, something may be off. Listen to rhythm too: a synthetic voice can have unnatural pauses, flat intonation, or stress on the wrong syllable.",
+   "3": "A convincing deepfake still has to obey the physics of the scene, and this is where it often slips. Check where the light comes from and whether it hits the face, neck, and background consistently. Shadows under the nose and chin should move with the head. Reflections in the eyes and on glasses help too: if they shift for no clear reason or fail to match the light source, doubt the image.",
+   "4": "Many fakes rely on short, compressed, or cropped clips to hide flaws. That is why it helps to find the longest, least compressed version available. Notice whether suspicious moments appear during fast movement, abrupt cuts, digital zooms, or music covering the sound. Low quality alone does not prove a deepfake, but it can protect one.",
+   "5": "The final check happens outside the clip itself: verify it independently. Search key phrases, look for the original upload, and confirm the date, place, and full version. If it is an image, try reverse search; if it is audio, look for transcripts or official statements. Fact-checking sites can help, but the main point is simple: do not decide from your first impression."
+  },
   "it": {
    "0": "Il primo controllo non è tecnico: chiediti da dove arriva il contenuto e perché circola proprio ora. Un deepfake funziona meglio se ti trova distratto, arrabbiato o stupito. Guarda chi lo pubblica, se cita una fonte verificabile e se altre testate affidabili mostrano lo stesso materiale. Se esiste solo in repost, tagli brevi o account anonimi, aumenta la prudenza.",
    "1": "Poi passa ai dettagli del volto. Molti deepfake migliorano da lontano ma cedono su bordi del viso, attaccatura dei capelli, denti, orecchie, occhiali e pelle intorno agli occhi. Cerca cambi improvvisi di nitidezza o una texture troppo liscia, quasi di plastica. Se la testa gira, il volto può sembrare incollato o cambiare qualità da un fotogramma all’altro.",
@@ -905,6 +1060,14 @@
   }
  },
  "v8-lez-visiting-an-archaeological-site-and-understanding-what-y": {
+  "en": {
+   "0": "As soon as you enter, resist the urge to focus on one stone or statue. Pause and take in the overall layout: open areas, taller walls, entrances, and routes. A site makes sense first as a landscape, then as details. Ask whether you are looking at a town, villa, temple, necropolis, or fortress. Location matters: on a hill for defense, near a river for trade, beside fertile land for production. Straight streets and regular blocks suggest a planned urban settlement, not a single isolated building.",
+   "1": "Now try to “read” the ground like a map. Lower remains often tell you more than standing walls: they show the shape of rooms, courtyards, thresholds, and stairways. Picture the plan from above. A large central rectangle may be a square or courtyard; a row of similar small rooms may suggest shops, storage, or lodgings.",
+   "2": "Not everything you see served the same purpose. Columns, load-bearing walls, and foundations tell you about structure; drains, ovens, basins, benches, or steps point to function. Decoration and fine flooring may suggest status, but alone they do not identify a room. The most common mistake is naming a place from one striking detail.",
+   "3": "An archaeological site is not a snapshot: it is the result of many phases. Notice what was added, rebuilt, blocked, or reused. A wall cutting an older floor, a filled-in doorway, different materials in one building: all are signs of change. Archaeologists call this stratigraphy. Understanding a site means following these changes, not chasing one “true” moment.",
+   "4": "At this point, try filling the spaces with gestures, sounds, and movement. Who entered here? Who waited, worked, prayed, bought, or ruled? Archaeology becomes clearer when you shift attention back to human beings. A paved street means traffic, encounters, goods, and noise; a theatre means audience, acoustics, visibility, and social hierarchy.",
+   "5": "The final step is the most mature one: distinguish what is known from what is inferred. Good archaeological explanations use different levels of certainty. It may be certain that a wall belongs to one phase; probable that a room served a specific activity; possible that a building also had symbolic meaning. Understanding means interpreting without inventing."
+  },
   "it": {
    "0": "Appena entri, resisti alla tentazione di fissarti su una pietra o una statua. Fermati e guarda il quadro generale: spazi aperti, muri più alti, accessi, percorsi. Un sito si capisce prima come paesaggio e poi come dettaglio. Chiediti se hai davanti una città, una villa, un tempio, una necropoli o una fortezza. Conta anche la posizione: su un'altura per difendersi, vicino a un fiume per commerciare, accanto a campi fertili per produrre.",
    "1": "Ora prova a leggere il terreno come una mappa. I resti più bassi spesso insegnano più dei muri conservati: mostrano stanze, cortili, soglie, scale. Immagina la pianta dall'alto. Un grande spazio rettangolare centrale può essere una piazza o un cortile; una fila di piccoli ambienti uguali può indicare botteghe, magazzini o alloggi. Una porta larga invita al movimento pubblico, una stretta separa ambienti più privati.",

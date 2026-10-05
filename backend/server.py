@@ -247,6 +247,13 @@ class UserState(BaseModel):
     display_name: Optional[str] = None
     gender: Optional[str] = None  # "man" | "woman" | "other"
     age: Optional[int] = None
+    # Foto profilo (Object Storage), servita da /api/avatar/{user_id}?v=avatar_version.
+    avatar_path: Optional[str] = None
+    avatar_version: Optional[str] = None
+
+class AvatarUpload(BaseModel):
+    user_id: str
+    image_base64: str
 
 class ProfileUpdate(BaseModel):
     user_id: str
@@ -1152,6 +1159,44 @@ async def set_profile(payload: ProfileUpdate):
         await db.user_state.update_one({"user_id": payload.user_id}, {"$set": update})
     doc = await db.user_state.find_one({"user_id": payload.user_id}, {"_id": 0})
     return UserState(**doc)
+
+@api_router.post("/user/avatar", response_model=UserState)
+async def set_avatar(payload: AvatarUpload):
+    """Carica la foto profilo scelta dalla galleria (JPEG/PNG in base64, ≤ 6 MB)."""
+    import base64, binascii
+    from media_opt import upload_avatar
+    b64 = payload.image_base64.split(",", 1)[-1]
+    if len(b64) > 8_000_000:
+        raise HTTPException(413, "image too large")
+    try:
+        raw = base64.b64decode(b64, validate=True)
+    except (binascii.Error, ValueError):
+        raise HTTPException(422, "invalid base64 image")
+    await _get_or_create_state(payload.user_id)
+    try:
+        fields = await asyncio.to_thread(upload_avatar, payload.user_id, raw)
+    except Exception as exc:
+        logger.exception("avatar upload failed")
+        raise HTTPException(502, f"avatar upload failed: {exc}")
+    await db.user_state.update_one({"user_id": payload.user_id}, {"$set": fields})
+    doc = await db.user_state.find_one({"user_id": payload.user_id}, {"_id": 0})
+    return UserState(**doc)
+
+@api_router.delete("/user/{user_id}/avatar", response_model=UserState)
+async def remove_avatar(user_id: str):
+    await _get_or_create_state(user_id)
+    await db.user_state.update_one({"user_id": user_id}, {"$set": {"avatar_path": None, "avatar_version": None}})
+    doc = await db.user_state.find_one({"user_id": user_id}, {"_id": 0})
+    return UserState(**doc)
+
+@api_router.get("/avatar/{user_id}")
+async def avatar_for_user(request: Request, user_id: str):
+    doc = await db.user_state.find_one({"user_id": user_id}, {"_id": 0, "avatar_path": 1})
+    if not doc or not doc.get("avatar_path"):
+        raise HTTPException(404, "No avatar")
+    from media_cache import cached_object
+    content, ctype = await cached_object(doc["avatar_path"])
+    return _image_response(request, doc["avatar_path"], content, ctype)
 
 @api_router.post("/user/bookmark", response_model=UserState)
 async def toggle_bookmark(payload: ToggleRequest):
