@@ -90,3 +90,8 @@ PAUSE è un'app mobile (Expo/React Native + FastAPI + MongoDB) di micro-apprendi
 ## Next Tasks
 - `fit_chapters.py` eseguito parzialmente (2026-10-01): 281/726 capitoli snelliti (104 storie) con ~1 $ di credito; la chiave si è esaurita.
   Restano 445 capitoli in 105 narrazioni (~1,2 $). Rilanciare `python fit_chapters.py` (idempotente) dopo la ricarica.
+
+## Paywall Premium v4 (giugno 2026)
+- `app/premium.tsx`: parte superiore invariata (hero ventaglio, claim €2,49/mese, selettore piani). Sotto: titolo "Scopri tutto ciò che offre Premium", griglia 2×2 di card glass con foto (assets/images/premium-{stories,learn,audio,personal}.jpg, generate con Nano Banana via `backend/gen_premium_art.py`), pulsante "Scopri tutte le funzioni →" che espande sul posto la lista completa, "Confronto rapido" a 5 righe con colonna Premium in glow cyan, CTA inline con note "7 giorni gratis · Nessun addebito oggi" / "Poi €29,99/anno…".
+- Sfondo (solo tema scuro): blu notte `#010914` + scie cyan a destra (`premium-bg-streak.jpg`) + orizzonte di montagne in fondo (`premium-bg-horizon.jpg`), componente `PaywallBackdrop`.
+- Chiave Emergent LLM funzionante di nuovo (budget ripristinato): `fit_chapters.py` può essere rilanciato su richiesta.

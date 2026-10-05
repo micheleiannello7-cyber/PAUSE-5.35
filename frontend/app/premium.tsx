@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, Pressable, ScrollView, StyleSheet } from "react-native";
+import { View, Text, Pressable, ScrollView, StyleSheet, LayoutAnimation, Platform, UIManager } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { Image } from "expo-image";
@@ -15,20 +15,30 @@ import { Screen } from "@/src/components/screen";
 import { PLANS, PlanId, YEARLY_PER_MONTH, usePremium } from "@/src/premium";
 import { useI18n } from "@/src/i18n";
 
-// Paywall v3 — hero con le tre copertine a ventaglio (invariato), un claim
-// unico "€2,49/mese", selettore dei tre piani in una riga (annuale in
-// evidenza, con prova gratuita), e una tabella Gratis / Premium che elenca
-// SOLO ciò che Premium sblocca davvero nell'app oggi (crediti e ricarica,
-// mini lezioni, cronologia, audio, catalogo, statistiche, preferiti, accesso
-// anticipato, colori accento). CTA fissa in basso che dice cosa succede oggi (niente).
+// Paywall v4 — hero con le tre copertine a ventaglio e selettore piani
+// (invariati). Sotto: quattro card fotografiche "glass" con ciò che Premium
+// sblocca, un link che espande la lista completa, un confronto rapido
+// Gratis / Premium a cinque righe e la CTA fissa in basso.
+if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
+const FEATURE_ART = {
+  stories: require("../assets/images/premium-stories.jpg"),
+  learn: require("../assets/images/premium-learn.jpg"),
+  audio: require("../assets/images/premium-audio.jpg"),
+  personal: require("../assets/images/premium-personal.jpg"),
+};
+
 export default function Premium() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { t } = useI18n();
-  const { colors } = useTheme();
+  const { colors, scheme } = useTheme();
   const styles = useStyles();
   const { isPremium, activate, cancel, isPending } = usePremium();
   const [selected, setSelected] = useState<PlanId>("yearly");
+  const [allFeatures, setAllFeatures] = useState(false);
   const plan = PLANS.find((p) => p.id === selected)!;
   const yearly = PLANS.find((p) => p.id === "yearly")!;
 
@@ -50,13 +60,29 @@ export default function Premium() {
     : plan.id === "lifetime" ? t.pw_lifetime_hint : t.pw_month_hint;
   const ctaLabel = plan.trialDays ? t.pw_cta_trial : t.pw_cta_plan.replace("{plan}", planLabel(plan.id));
   const ctaNote = plan.trialDays
-    ? `${t.pw_no_charge} · ${t.pw_then.replace("{price}", plan.price).replace("{period}", planPeriod(plan.id))}`
+    ? t.pw_note_free
     : plan.id === "lifetime" ? t.pw_lifetime_hint : t.pw_no_charge;
+  const ctaThen = plan.trialDays ? t.pw_note_then.replace("{price}", plan.price).replace("{period}", planPeriod(plan.id)) : null;
+
+  // Quattro card fotografiche: ciò che Premium sblocca, raccontato per temi.
+  const features = [
+    { key: "stories", icon: "book-outline", title: t.pw_f_stories_t, sub: t.pw_f_stories_s },
+    { key: "learn", icon: "school-outline", title: t.pw_f_learn_t, sub: t.pw_f_learn_s },
+    { key: "audio", icon: "headset-outline", title: t.pw_f_audio_t, sub: t.pw_f_audio_s },
+    { key: "personal", icon: "person-outline", title: t.pw_f_personal_t, sub: t.pw_f_personal_s },
+  ] as const;
 
   // Confronto Gratis / Premium: solo funzioni presenti nell'app (vedi backend
   // FREE_/PREMIUM_CAPACITY, HISTORY_FREE_DAYS, FREE_SAVED_LIMIT, EARLY_ACCESS_DAYS
   // e i gate `isPremium` di audio, browse, playlist, stats, accento).
   type Row = { icon: string; title: string; sub?: string; free: string | false; premium: string | true };
+  const quickRows: Row[] = [
+    { icon: "layers-outline", title: t.pw_r_sessions, free: "4", premium: "5" },
+    { icon: "flash-outline", title: t.pw_r_recharge, free: t.pw_q_recharge_free, premium: t.pw_q_recharge_premium },
+    { icon: "time-outline", title: t.pw_r_history_short, free: t.pw_r_history_free, premium: t.pw_r_history_premium },
+    { icon: "headset-outline", title: t.pw_r_audio_short, free: false, premium: true },
+    { icon: "heart-outline", title: t.pw_r_saved_short, free: "20", premium: t.pw_unlimited },
+  ];
   const rows: Row[] = [
     { icon: "layers-outline", title: t.pw_r_sessions, sub: t.pw_r_sessions_sub, free: "4", premium: "5" },
     { icon: "flash-outline", title: t.pw_r_recharge, sub: t.pw_r_recharge_sub, free: t.pw_r_recharge_free, premium: t.pw_r_recharge_premium },
@@ -76,16 +102,21 @@ export default function Premium() {
     goBack();
   };
 
+  const dark = scheme === "dark";
+  const bg = dark ? PAYWALL_BG : colors.surface;
+  const cardBg = colors.surfaceDeep;
+
   return (
-    <Screen style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: spacing.xl }}>
+    <Screen style={[styles.container, { backgroundColor: bg }]}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: insets.bottom + spacing.lg }}>
+        {dark ? <PaywallBackdrop bg={bg} /> : null}
         {/* ---- Hero: ventaglio di copertine su sfondo sfocato (invariato) ---- */}
         <View style={[styles.hero, { paddingTop: insets.top + 48 }]} testID="paywall-hero">
           {covers[0] ? (
             <Image source={{ uri: heroUrl(covers[0], "thumb") }} style={StyleSheet.absoluteFill} contentFit="cover" blurRadius={30} cachePolicy="memory-disk" />
           ) : null}
           <LinearGradient
-            colors={["rgba(5,7,12,0.35)", "rgba(5,7,12,0.55)", colors.surface]}
+            colors={["rgba(5,7,12,0.35)", "rgba(5,7,12,0.55)", bg]}
             locations={[0, 0.6, 1]}
             style={StyleSheet.absoluteFill}
           />
@@ -162,25 +193,51 @@ export default function Premium() {
             <Text style={styles.planHintText}>{planHint}</Text>
           </View>
 
-          {/* ---- Confronto Gratis / Premium ---- */}
-          <Text style={styles.compareTitle} testID="paywall-compare-title">{t.pw_compare_title}</Text>
+          {/* ---- Quattro card fotografiche: cosa offre Premium ---- */}
+          <Text style={styles.featTitle} testID="paywall-features-title">{t.pw_features_title}</Text>
+          <Text style={styles.featSub}>{t.pw_features_sub}</Text>
+          <View style={styles.grid} testID="paywall-features">
+            {features.map((f) => (
+              <View key={f.key} style={styles.card} testID={`feature-${f.key}`}>
+                <View style={styles.cardArt}>
+                  <Image source={FEATURE_ART[f.key]} style={StyleSheet.absoluteFill} contentFit="cover" transition={250} accessible={false} />
+                  <LinearGradient colors={["transparent", withAlpha(cardBg, 0.35), cardBg]} locations={[0.45, 0.8, 1]} style={StyleSheet.absoluteFill} />
+                </View>
+                <View style={styles.cardIcon}>
+                  <Ionicons name={f.icon as any} size={16} color={colors.onSurface} />
+                </View>
+                <Text style={styles.cardTitle}>{f.title}</Text>
+                <Text style={styles.cardSub}>{f.sub}</Text>
+                <Ionicons name="arrow-forward" size={14} color={colors.brand} style={styles.cardArrow} />
+              </View>
+            ))}
+          </View>
+
+          <Pressable
+            onPress={() => { LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut); setAllFeatures((v) => !v); }}
+            style={styles.allBtn} testID="paywall-all-features" accessibilityRole="button" accessibilityState={{ expanded: allFeatures }}
+          >
+            <Text style={styles.allBtnText}>{allFeatures ? t.pw_less_features : t.pw_all_features}</Text>
+            <Ionicons name={allFeatures ? "chevron-up" : "arrow-forward"} size={15} color={colors.brand} />
+          </Pressable>
+
+          {/* ---- Confronto rapido (5 righe) · espandibile alla lista completa ---- */}
           <View style={styles.table} testID="paywall-compare">
             <View style={styles.tableHead}>
-              <View style={{ flex: 1 }} />
+              <Text style={styles.compareTitle} testID="paywall-compare-title">{t.pw_quick_compare}</Text>
               <Text style={[styles.colLabel, styles.colFree]}>{t.pw_free_label}</Text>
-              <View style={[styles.colPremiumHead]}>
-                <Ionicons name="diamond" size={10} color={colors.onBrand} />
+              <View style={styles.colPremiumHead}>
                 <Text style={styles.colPremiumText}>{t.pw_premium_label}</Text>
               </View>
             </View>
-            {rows.map((r, i) => (
-              <View key={r.title} style={[styles.row, i === rows.length - 1 && styles.rowLast]} testID={`compare-${r.icon}`}>
+            {(allFeatures ? rows : quickRows).map((r, i, arr) => (
+              <View key={r.title} style={[styles.row, i === arr.length - 1 && styles.rowLast]} testID={`compare-${r.icon}`}>
                 <View style={styles.rowIcon}>
-                  <Ionicons name={r.icon as any} size={16} color={colors.onSurfaceSecondary} />
+                  <Ionicons name={r.icon as any} size={14} color={colors.onSurfaceSecondary} />
                 </View>
                 <View style={styles.rowText}>
-                  <Text style={styles.rowTitle}>{r.title}</Text>
-                  {r.sub ? <Text style={styles.rowSub}>{r.sub}</Text> : null}
+                  <Text style={styles.rowTitle} numberOfLines={allFeatures ? 2 : 1}>{r.title}</Text>
+                  {allFeatures && r.sub ? <Text style={styles.rowSub}>{r.sub}</Text> : null}
                 </View>
                 <View style={styles.cellFree}>
                   {r.free === false
@@ -189,27 +246,36 @@ export default function Premium() {
                 </View>
                 <View style={styles.cellPremium}>
                   {r.premium === true
-                    ? <Ionicons name="checkmark-circle" size={18} color={colors.brand} />
-                    : <Text style={styles.cellPremiumText} numberOfLines={2}>{r.premium}</Text>}
+                    ? <Ionicons name="checkmark-circle-outline" size={18} color={colors.brand} />
+                    : <Text style={styles.cellPremiumText} numberOfLines={3}>{r.premium}</Text>}
                 </View>
               </View>
             ))}
-            {/* Colonna Premium leggermente tinta, sotto alle celle. */}
+            {/* Colonna Premium: velo cyan + glow, sotto alle celle. */}
             <View pointerEvents="none" style={styles.premiumColumnTint} />
           </View>
 
-          {/* ---- Fiducia ---- */}
-          <View style={styles.trust}>
-            <Trust icon="shield-checkmark-outline" label={t.pw_trust_store} />
-            <Trust icon="close-circle-outline" label={t.pw_trust_cancel} />
-            <Trust icon="phone-portrait-outline" label={t.pw_trust_family} />
-          </View>
-
-          {isPremium ? (
-            <Pressable style={styles.cancel} onPress={() => cancel()} testID="premium-cancel">
-              <Text style={styles.cancelText}>{t.premium_cancel_preview}</Text>
+          {/* ---- CTA ---- */}
+          <View style={styles.ctaWrap}>
+            {isPremium ? (
+              <View style={styles.activeChip} testID="premium-active-chip">
+                <Ionicons name="checkmark-done" size={18} color={colors.success} />
+                <Text style={styles.activeChipText}>{t.premium_active}</Text>
+              </View>
+            ) : (
+              <GradientButton label={ctaLabel} icon="arrow-forward" onPress={onActivate} loading={isPending} testID="premium-activate" style={styles.cta} />
+            )}
+            <Text style={styles.ctaNote} testID="paywall-cta-note">{ctaNote}</Text>
+            {ctaThen ? <Text style={styles.ctaThen} testID="paywall-cta-then">{ctaThen}</Text> : null}
+            <Pressable onPress={() => {}} testID="premium-restore" hitSlop={8}>
+              <Text style={styles.restore}>{t.premium_restore}</Text>
             </Pressable>
-          ) : null}
+            {isPremium ? (
+              <Pressable style={styles.cancel} onPress={() => cancel()} testID="premium-cancel">
+                <Text style={styles.cancelText}>{t.premium_cancel_preview}</Text>
+              </Pressable>
+            ) : null}
+          </View>
         </View>
       </ScrollView>
 
@@ -220,46 +286,47 @@ export default function Premium() {
           <Ionicons name="close" size={20} color="#FFFFFF" />
         </Pressable>
       </View>
-
-      {/* ---- CTA fissa ---- */}
-      <View style={[styles.footer, { paddingBottom: insets.bottom + spacing.sm }]}>
-        {isPremium ? (
-          <View style={styles.activeChip} testID="premium-active-chip">
-            <Ionicons name="checkmark-done" size={18} color={colors.success} />
-            <Text style={styles.activeChipText}>{t.premium_active}</Text>
-          </View>
-        ) : (
-          <GradientButton label={ctaLabel} icon="arrow-forward" onPress={onActivate} loading={isPending} testID="premium-activate" />
-        )}
-        <Text style={styles.ctaNote} testID="paywall-cta-note">{ctaNote}</Text>
-        <Pressable onPress={() => {}} testID="premium-restore" hitSlop={8}>
-          <Text style={styles.restore}>{t.premium_restore}</Text>
-        </Pressable>
-      </View>
     </Screen>
   );
 }
+
+// Sfondo del paywall (solo tema scuro): blu notte uniforme, scie di luce
+// cyan sulla destra all'altezza delle card, orizzonte di montagne in fondo.
+function PaywallBackdrop({ bg }: { bg: string }) {
+  return (
+    <View pointerEvents="none" style={[StyleSheet.absoluteFill, { backgroundColor: bg }]} testID="paywall-backdrop">
+      <View style={bd.streak}>
+        <Image source={BG_STREAK} style={StyleSheet.absoluteFill} contentFit="cover" contentPosition="right" transition={0} accessible={false} />
+        <LinearGradient colors={[bg, withAlpha(bg, 0)]} start={{ x: 0, y: 0.5 }} end={{ x: 0.55, y: 0.5 }} style={StyleSheet.absoluteFill} />
+        <LinearGradient colors={[bg, withAlpha(bg, 0), withAlpha(bg, 0), bg]} locations={[0, 0.25, 0.75, 1]} style={StyleSheet.absoluteFill} />
+      </View>
+      <View style={bd.horizon}>
+        <Image source={BG_HORIZON} style={StyleSheet.absoluteFill} contentFit="cover" contentPosition="bottom" transition={0} accessible={false} />
+        {/* Veli: fusione in alto con lo sfondo, orizzonte appena visibile, base scura per la CTA e le note. */}
+        <LinearGradient colors={[bg, withAlpha(bg, 0.72), withAlpha(bg, 0.42), withAlpha(bg, 0.5), withAlpha(bg, 0.72)]} locations={[0, 0.3, 0.55, 0.78, 1]} style={StyleSheet.absoluteFill} />
+      </View>
+    </View>
+  );
+}
+
+const BG_STREAK = require("../assets/images/premium-bg-streak.jpg");
+const BG_HORIZON = require("../assets/images/premium-bg-horizon.jpg");
+const PAYWALL_BG = "#010914"; // stesso blu notte del fondo delle immagini di sfondo
+
+const bd = StyleSheet.create({
+  streak: { position: "absolute", right: 0, top: 540, width: 260, height: 760, overflow: "hidden" },
+  horizon: { position: "absolute", left: 0, right: 0, bottom: 0, height: 480, overflow: "hidden" },
+});
 
 function Radio({ active }: { active: boolean }) {
   const styles = useStyles();
   return <View style={[styles.radio, active && styles.radioActive]}>{active ? <View style={styles.radioDot} /> : null}</View>;
 }
 
-function Trust({ icon, label }: { icon: string; label: string }) {
-  const styles = useStyles();
-  const { colors } = useTheme();
-  return (
-    <View style={styles.trustItem}>
-      <Ionicons name={icon as any} size={16} color={colors.muted} />
-      <Text style={styles.trustText}>{label}</Text>
-    </View>
-  );
-}
-
 const FAN_W = 108;
 const FAN_H = 144;
-const COL_FREE_W = 62;
-const COL_PREMIUM_W = 82;
+const COL_FREE_W = 58;
+const COL_PREMIUM_W = 78;
 
 const useStyles = makeStyles((colors) => ({
   container: { flex: 1, backgroundColor: colors.surface },
@@ -326,49 +393,68 @@ const useStyles = makeStyles((colors) => ({
   },
   radioActive: { borderColor: colors.brand },
   radioDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: colors.brand },
-  // Tabella confronto
-  compareTitle: { color: colors.onSurface, fontFamily: typography.displayBold, fontSize: 18, marginTop: spacing.xl + spacing.sm, marginBottom: spacing.md },
+  // Card fotografiche
+  featTitle: { color: colors.onSurface, fontFamily: typography.displayBold, fontSize: 22, lineHeight: 28, marginTop: spacing.xl + spacing.md },
+  featSub: { color: colors.onSurfaceSecondary, fontFamily: typography.body, fontSize: 14, lineHeight: 20, marginTop: 4 },
+  grid: { flexDirection: "row", flexWrap: "wrap", gap: spacing.md, marginTop: spacing.lg },
+  card: {
+    width: "48%", flexGrow: 1, borderRadius: radius.lg + 4, overflow: "hidden",
+    backgroundColor: withAlpha(colors.surfaceDeep, 0.92), borderWidth: 1, borderColor: withAlpha(colors.brand, 0.22),
+    paddingBottom: spacing.md, boxShadow: `0px 10px 30px ${withAlpha(colors.brand, 0.08)}, 0px 0px 0px 0.5px ${withAlpha(colors.brand, 0.12)}`,
+  },
+  cardArt: { height: 118, backgroundColor: colors.surfaceDeep },
+  cardIcon: {
+    width: 34, height: 34, borderRadius: 17, alignItems: "center", justifyContent: "center",
+    marginTop: -17, marginLeft: spacing.md, backgroundColor: withAlpha(colors.surfaceDeep, 0.9),
+    borderWidth: 1, borderColor: withAlpha(colors.brand, 0.3), boxShadow: `0px 0px 14px ${withAlpha(colors.brand, 0.25)}`,
+  },
+  cardTitle: { color: colors.onSurface, fontFamily: typography.bodyBold, fontSize: 14, lineHeight: 18, marginTop: spacing.sm, paddingHorizontal: spacing.md },
+  cardSub: { color: colors.onSurfaceSecondary, fontFamily: typography.body, fontSize: 11.5, lineHeight: 16, marginTop: 4, paddingHorizontal: spacing.md, paddingRight: spacing.lg },
+  cardArrow: { alignSelf: "flex-end", marginTop: spacing.sm, marginRight: spacing.md },
+  allBtn: {
+    flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, alignSelf: "stretch",
+    height: 46, borderRadius: radius.pill, marginTop: spacing.lg,
+    backgroundColor: withAlpha(colors.brand, 0.06), borderWidth: 1, borderColor: withAlpha(colors.brand, 0.3),
+  },
+  allBtnText: { color: colors.brand, fontFamily: typography.bodyBold, fontSize: 14 },
+  // Confronto rapido
+  compareTitle: { flex: 1, color: colors.onSurface, fontFamily: typography.displayBold, fontSize: 17 },
   table: {
-    borderRadius: radius.lg, backgroundColor: colors.surfaceSecondary, borderWidth: 1, borderColor: colors.border,
-    overflow: "hidden", position: "relative",
+    marginTop: spacing.xl, borderRadius: radius.lg + 2, backgroundColor: withAlpha(colors.surfaceDeep, 0.85),
+    borderWidth: 1, borderColor: withAlpha(colors.brand, 0.14), overflow: "hidden", position: "relative",
   },
   tableHead: { flexDirection: "row", alignItems: "center", paddingHorizontal: spacing.md, paddingTop: spacing.md, paddingBottom: spacing.sm, zIndex: 1 },
-  colLabel: { fontFamily: typography.bodyBold, fontSize: 11, letterSpacing: 0.8, textAlign: "center" },
+  colLabel: { fontFamily: typography.bodyMedium, fontSize: 12, textAlign: "center" },
   colFree: { width: COL_FREE_W, color: colors.muted },
   colPremiumHead: {
-    width: COL_PREMIUM_W, flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 4,
-    height: 22, borderRadius: radius.pill, backgroundColor: colors.brand, marginLeft: spacing.xs,
+    width: COL_PREMIUM_W, alignItems: "center", justifyContent: "center", height: 26, borderRadius: radius.sm, marginLeft: spacing.xs,
+    backgroundColor: withAlpha(colors.brand, 0.14), borderWidth: 1, borderColor: withAlpha(colors.brand, 0.35),
+    boxShadow: `0px 0px 16px ${withAlpha(colors.brand, 0.3)}`,
   },
-  colPremiumText: { color: colors.onBrand, fontFamily: typography.bodyBold, fontSize: 10.5, letterSpacing: 0.8 },
-  row: {
-    flexDirection: "row", alignItems: "center", paddingHorizontal: spacing.md, paddingVertical: spacing.sm + 2,
-    borderTopWidth: 1, borderTopColor: colors.divider, zIndex: 1,
-  },
+  colPremiumText: { color: colors.brand, fontFamily: typography.bodyBold, fontSize: 12 },
+  row: { flexDirection: "row", alignItems: "center", paddingHorizontal: spacing.md, paddingVertical: 7, zIndex: 1 },
   rowLast: { paddingBottom: spacing.md },
-  rowIcon: { width: 24, alignItems: "center", marginRight: spacing.sm },
+  rowIcon: { width: 20, alignItems: "center", marginRight: spacing.sm },
   rowText: { flex: 1, minWidth: 0, paddingRight: spacing.xs },
-  rowTitle: { color: colors.onSurface, fontFamily: typography.bodyBold, fontSize: 13.5, lineHeight: 18 },
+  rowTitle: { color: colors.onSurface, fontFamily: typography.bodyMedium, fontSize: 13, lineHeight: 17 },
   rowSub: { color: colors.muted, fontFamily: typography.body, fontSize: 11, lineHeight: 15, marginTop: 1 },
   cellFree: { width: COL_FREE_W, alignItems: "center", justifyContent: "center" },
-  cellFreeText: { color: colors.muted, fontFamily: typography.bodyMedium, fontSize: 12, textAlign: "center", lineHeight: 15 },
+  cellFreeText: { color: colors.onSurfaceSecondary, fontFamily: typography.bodyMedium, fontSize: 12.5, textAlign: "center", lineHeight: 15 },
   cellPremium: { width: COL_PREMIUM_W, marginLeft: spacing.xs, alignItems: "center", justifyContent: "center" },
-  cellPremiumText: { color: colors.brand, fontFamily: typography.bodyBold, fontSize: 12, textAlign: "center", lineHeight: 15 },
+  cellPremiumText: { color: colors.brand, fontFamily: typography.bodyBold, fontSize: 12.5, textAlign: "center", lineHeight: 15 },
   premiumColumnTint: {
-    position: "absolute", top: 0, bottom: 0, right: spacing.md, width: COL_PREMIUM_W,
-    backgroundColor: withAlpha(colors.brand, 0.06), borderLeftWidth: 1, borderRightWidth: 1, borderColor: withAlpha(colors.brand, 0.12),
+    position: "absolute", top: spacing.sm, bottom: spacing.sm, right: spacing.md - 4, width: COL_PREMIUM_W + 8, borderRadius: radius.md,
+    backgroundColor: withAlpha(colors.brand, 0.07), borderWidth: 1, borderColor: withAlpha(colors.brand, 0.18),
+    boxShadow: `0px 0px 22px ${withAlpha(colors.brand, 0.12)}`,
   },
-  // Fiducia + resto
-  trust: { flexDirection: "row", justifyContent: "space-between", gap: spacing.sm, marginTop: spacing.xl },
-  trustItem: { flex: 1, alignItems: "center", gap: 4 },
-  trustText: { color: colors.muted, fontFamily: typography.bodyMedium, fontSize: 10.5, textAlign: "center", lineHeight: 14 },
-  cancel: { alignSelf: "center", padding: spacing.sm, marginTop: spacing.md },
+  // CTA
+  ctaWrap: { marginTop: spacing.xl, alignItems: "center", gap: spacing.xs },
+  cta: { alignSelf: "stretch" },
+  ctaNote: { color: colors.onSurfaceSecondary, fontFamily: typography.bodyMedium, fontSize: 12.5, lineHeight: 17, textAlign: "center", marginTop: spacing.xs },
+  ctaThen: { color: colors.muted, fontFamily: typography.body, fontSize: 11.5, lineHeight: 16, textAlign: "center" },
+  restore: { color: colors.brand, fontFamily: typography.bodyBold, fontSize: 13, marginTop: spacing.sm },
+  cancel: { alignSelf: "center", padding: spacing.sm },
   cancelText: { color: colors.muted, fontFamily: typography.bodyMedium, fontSize: 13 },
-  footer: {
-    paddingHorizontal: spacing.xl, paddingTop: spacing.md, alignItems: "center", gap: spacing.xs,
-    backgroundColor: colors.surface, borderTopWidth: 1, borderTopColor: colors.divider,
-  },
-  ctaNote: { color: colors.muted, fontFamily: typography.body, fontSize: 11.5, lineHeight: 16, textAlign: "center" },
-  restore: { color: colors.brand, fontFamily: typography.bodyBold, fontSize: 13, marginTop: 2 },
   activeChip: {
     flexDirection: "row", alignItems: "center", gap: spacing.sm, alignSelf: "stretch", justifyContent: "center",
     height: 52, borderRadius: radius.pill,
